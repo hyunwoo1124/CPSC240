@@ -1,1 +1,22 @@
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+
+int main() {
+
+	short nine = 9, five = 5, temperature = 95, C;
+	_asm
+	{
+		mov ax, temperature;
+		sub ax, 32;
+		imul five;
+		idiv nine;
+		mov	C, ax;
+	}
+
+	cout << C << endl;
+	
+	system("pause");
+}
