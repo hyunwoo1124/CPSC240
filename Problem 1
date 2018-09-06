@@ -1,23 +1,44 @@
+/*
+CPSC 240
+Assignment 2 Problem 1
+Author: Hyun Woo Kim, Nathan Marcos
+*/
+
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-
 int main() {
+	short drinks = 4;
+	short drinkAmount = 0;
+	short sandwiches = 7;
+	short sandwichAmount = 0;
+	short bill = 0;
 
-	short drinks = 4, sandwiches = 7, amount = 3, B;
-	_asm
-	{
-		mov ax, amount;
-		mov bx, amount;
-		imul ax, drinks;
-		imul bx, sandwiches;
-		add ax, bx;
-		mov B, ax;
+	cout << "---------------MENU---------------" << endl;
+	cout << "Drinks..........................$4" << endl;
+	cout << "Sandwiches......................$7" << endl;
+	cout << "	How many drinks? ";
+	cin >> drinkAmount;
+	cout << endl;
+	cout << "	How many sadwiches: ";
+	cin >> sandwichAmount;
+	cout << endl;
+	cout << "		Your total bill ";
+	cout << endl;
+
+	_asm {
+		mov ax, drinks; // ax = drinks, 4
+		mov bx, sandwiches; // bx = sandwiches, 7
+		imul ax, drinkAmount; // ax = 4 * amount
+		imul bx, sandwichAmount; // bx = 7 * amount
+		add ax, bx; // ax = ax + bx;
+		mov bill, ax;
+		
 	}
+	cout << bill << endl;
 
-	cout << B << endl;
-  
-  system("pause");
+	system("pause");
+	return 0;
 }
