@@ -1,22 +1,32 @@
+/*
+CPSC240
+Assignment 2 Problem 3
+Author: Hyun Woo Kim, Nathan Marcos
+*/
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-
 int main() {
+	short f=0; // fahrenheit
+	short c=0; // celsius
+	short five = 5;
+	short thirty_two = 32;
+	short nine = 9;
 
-	short nine = 9, five = 5, temperature = 95, C;
-	_asm
-	{
-		mov ax, temperature;
-		sub ax, 32;
-		imul five;
+	cout << "Enter temperature in fahrenheit: ";
+	cin >> f;
+
+	_asm {
+		mov ax, f; // ax = f;
+		sub ax, thirty_two; // ax= f-32
+		imul five; // ax = 5(f-32)
 		idiv nine;
-		mov	C, ax;
+		mov c, ax; // c = 5(f-32)/9
 	}
+	cout << f << "F is " << c << "C" << endl;
 
-	cout << C << endl;
-	
 	system("pause");
+	return 0;
 }
