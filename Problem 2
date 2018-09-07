@@ -1,1 +1,64 @@
+/*
+CPSC 240
+Assignment 2 Problem 2
+Author: Hyun Woo Kim, Nathan Marcos
+*/
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+int main() {
+	int a, b, c; // side
+	int h; // height
+	int two = 2; // convenience constant two
+	int areaTri;
+	int perTri;
+
+	int l, w; // length and width
+	int areaRec;
+	int perRec;
+
+	
+
+
+	cout << "Enter the values of a,b,c, and h: ";
+	cin >> a >> b >> c >> h;
+	_asm {
+		mov eax, h; //eax = h
+		imul c; // eax = h*c
+		cdq;
+		idiv two; // eax = b*c/2
+		mov areaTri, eax;  // areaTri = b*c/2
+
+		mov ebx, a; // ebx = a;
+		add ebx, b; // ebx = a+b;
+		add ebx, c; // ebx = a+b+c;
+		mov perTri, ebx; // perTri = a+b+c
+
+	}
+	cout << "Enter the values of length and width of the rectangle: ";
+	cin >> l >> w;
+	_asm {
+		mov ecx, l; // ecx = l
+		imul ecx, w; // ecx = l*w;
+		mov areaRec, ecx; // areaRec = l*w
+
+		mov edx, l; //edx = l;
+		add edx, w; // edx = l+w;
+		imul edx, two; //edx = 2(l+w)
+		mov perRec, edx; // edx = 2(l+w)
+	}
+	cout << "Triangle" << endl;
+	cout << "		Area................" << areaTri << endl;
+	cout << "		Perimeter..........." << perTri << endl;
+	cout << "Rectangle" << endl;
+	cout << "		Area................" << areaRec << endl;
+	cout << "		Perimeter..........." << perRec << endl;
+
+	
+
+
+	system("pause");
+	return 0;
+}
