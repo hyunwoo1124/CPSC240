@@ -26,7 +26,6 @@ int main() {
 	cin >> sandwichAmount;
 	cout << endl;
 	cout << "		Your total bill ";
-	cout << endl;
 
 	_asm {
 		mov ax, drinks; // ax = drinks, 4
@@ -37,7 +36,7 @@ int main() {
 		mov bill, ax;
 		
 	}
-	cout << bill << endl;
+	cout << bill << " dollars" << endl;
 
 	system("pause");
 	return 0;
