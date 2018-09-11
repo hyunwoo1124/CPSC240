@@ -1,1 +1,38 @@
 
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+	
+	int num = 0;
+	int ten = 10;
+	int hundread = 100;
+	int remainder = 0;
+	int sum = 0;
+
+	cout << "Enter a 3 digit integer number: "; // 758
+	cin >> num; 
+	
+	_asm {
+		mov eax, num;		// eax= 758
+		cdq;				// convert double to quad
+		idiv hundread;		// eax = 7, edx = 58;
+		mov remainder, edx; // remainder = edx = 58
+		add sum, eax;		// sum = 7
+
+		mov eax, remainder; // eax = 58
+		cdq;				// convert double to quad
+		idiv ten;			// eax = 5 edx = 8
+		add eax, edx;		// eax = 5 + 8 // 13
+		add sum, eax;		// sum = 7 + 13
+		mov eax, sum;		// eax = sum = 20
+		
+
+	}
+	cout << "The total of digits in " << num << " is " << sum << endl;
+
+	system("pause");
+	return 0;
+}
