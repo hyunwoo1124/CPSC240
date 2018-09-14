@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int soda = 2, water = 1, tenInches = 3, twelveInches = 5, total = 0;
+int drinks = 0, sandwiches = 0;
+char drinkType = NULL;
+int sandwichType = 0;
+
+void numDrinks() {
+	cout << "How many drinks? ";
+	cin >> drinks;
+}
+
+void typeDrink() {
+	cout << "\tWhat kind of drinks(S=Soda, W=Water)? ";
+	cin >> drinkType;
+}
+
+void numSandwiches() {
+	cout << "How many sandwiches? ";
+	cin >> sandwiches;
+}
+
+void typeSandwich() {
+	cout << "\tWhat size sandwich(10/12 inches)? ";
+	cin >> sandwichType;
+}
+
+void displayTotal() {
+	cout << "Your total bill = " << total << endl;
+}
+
+int main() {
+
+	cout << "-----------------------7-11 Convenient Store-----------------------\n" << "Drinks\n"
+		<< "\tSoda(S)......................$2\n" << "\tWater(W)......................$1\n" << "Sandwiches\n" << "\t10 inches......................$3\n" <<
+		"\t12 inches......................$5\n";
+
+	_asm {
+		call numDrinks;			//enter in the number of drinks
+		call typeDrink;			//enter in the type of drink
+
+		mov al, drinkType;		//al = drinkType (S or W)
+		mov ebx, drinks;		//ebx = number of drinks
+
+		cmp al, 'W';			//compare drinkType with W
+		Jne sodaDrink;			//if drinkType does not equal W, jump to sodaDrink
+
+	waterDrink:
+		imul ebx, water;		//multiply the number of drinks by the price of water
+		add total, ebx;			//add the product of ebx, water to the total
+		Jmp addSandwiches;		//jump to addSandwiches
+
+	sodaDrink:
+		imul ebx, soda;			//multiply the number of drinks by the price of soda
+		add total, ebx;			//add the product of ebx, soda to the total
+
+	addSandwiches:
+		mov ebx, 0;				//reset ebx to 0
+
+		call numSandwiches;		//enter in the number of sandwiches
+		call typeSandwich;		//enter in the type of sandwich
+
+		mov eax, sandwichType;	//eax = sandwichTpye (10 or 12)
+		mov ebx, sandwiches;	//ebx = number of sandwiches
+		cmp eax, 10;			//compare sandwichType with 10
+		Jne sandwichTwelve;		//if sandwichType does not equal 10, jump to sandwichTwelve
+
+	sandwichTen:
+		imul ebx, tenInches;	//multiply the number of sandwiches by the price of a 10 inch sandwich
+		add total, ebx;			//add the product of ebx, tenInches to the total
+		Jmp showTotal;			//jump to showTotal
+	sandwichTwelve:
+		imul ebx, twelveInches;	//multiply the number of sandwiches by the price of a 12 inch sandwich
+		add total, ebx;			//add the product of ebx, twelveInches to the total
+
+	showTotal:
+		call displayTotal;		//print the total
+	}
+
+	system("pause");
+	return 0;
+	}
