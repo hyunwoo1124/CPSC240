@@ -58,22 +58,22 @@ int main() {
 		add total, ebx;			//add the product of ebx, soda to the total
 
 	addSandwiches:
-		mov ebx, 0;				//reset ebx to 0
+		mov ebx, 0;			//reset ebx to 0
 
 		call numSandwiches;		//enter in the number of sandwiches
 		call typeSandwich;		//enter in the type of sandwich
 
-		mov eax, sandwichType;	//eax = sandwichTpye (10 or 12)
-		mov ebx, sandwiches;	//ebx = number of sandwiches
+		mov eax, sandwichType;		//eax = sandwichTpye (10 or 12)
+		mov ebx, sandwiches;		//ebx = number of sandwiches
 		cmp eax, 10;			//compare sandwichType with 10
 		Jne sandwichTwelve;		//if sandwichType does not equal 10, jump to sandwichTwelve
 
 	sandwichTen:
-		imul ebx, tenInches;	//multiply the number of sandwiches by the price of a 10 inch sandwich
+		imul ebx, tenInches;		//multiply the number of sandwiches by the price of a 10 inch sandwich
 		add total, ebx;			//add the product of ebx, tenInches to the total
 		Jmp showTotal;			//jump to showTotal
 	sandwichTwelve:
-		imul ebx, twelveInches;	//multiply the number of sandwiches by the price of a 12 inch sandwich
+		imul ebx, twelveInches;		//multiply the number of sandwiches by the price of a 12 inch sandwich
 		add total, ebx;			//add the product of ebx, twelveInches to the total
 
 	showTotal:
