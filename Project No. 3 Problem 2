@@ -18,11 +18,11 @@ int main() {
 	cout << "Let's compute your score's average:\n";
 
 	_asm {
-		mov ebx, numOfScores;		//ebx = number of scores = 0
+		mov ebx, numOfScores;			//ebx = number of scores = 0
 		call addScore;				//insert score
 		mov eax, score;				//eax = score
 		cmp eax, quit;				//compare score to -1
-		Jne insertScore;			//if score does not = -1, jump to insert score else jump to quit score
+		Je quitScore;				//if score does not = -1, jump to insert score else jump to quit score
 
 	insertScore:
 		add total, eax;				//add eax to total
@@ -34,10 +34,10 @@ int main() {
 
 	quitScore:
 		mov eax, total;				//eax = total
-		cdq;						//convert to quad *What do I convert it to so that it displays decimals?
-		idiv ebx;					//divide eax by ebx (divide the total by the number of scores)
+		cdq;					//convert to quad *What do I convert it to so that it displays decimals?
+		idiv ebx;				//divide eax by ebx (divide the total by the number of scores)
 		mov average, eax;			//average = eax
-		call displayAverage;		//print average
+		call displayAverage;			//print average
 	}
 
 	system("pause");
