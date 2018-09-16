@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+short a, b, c = 0;
+short d, e, f = 0;
+
+short ytop = 0;
+short ybot = 0;
+
+short xtop = 0;
+short xbot = 0;
+short Y, X = 0;
+short total = 0;
+
+
+void printVisual() {
+	cout << "This program solves the system\n";
+	cout << "aX + bY = c\t\t a*f-c*d\t\t c*e-b*f\n";
+	cout << "\t\t   Y=-----------------    X= -------------------\n";
+	cout << "dX + eY = f\t\t a*e-b*d\t\t a*e-b*d\n";
+}
+void userInput() {
+	cout << "Enter the values of a,b, and c: ";
+	cin >> a >> b >> c;
+	cout << endl;
+	cout << "Enter the values of d,e, and f: ";
+	cin >> d >> e >> f;
+}
+void answer() {
+	cout << " x = " << X << endl;
+	cout << " y = " << Y << endl;
+}
+
+
+int main() {
+	
+	_asm {
+		call printVisual;
+		call userInput;
+
+		mov ax, a;
+		imul ax, f;
+		mov bx, c;
+		mov bx, d;
+		sub ax, bx;
+		mov ytop, ax;
+
+		mov ax, a;
+		imul ax, e;
+		mov bx, b;
+		imul bx, d;
+		sub ax, bx;
+		mov ybot, ax;
+
+		mov ax, ytop;
+		cdq;
+		idiv ybot;
+		mov Y, ax;
+
+		mov cx, c;
+		imul cx, e;
+		mov dx, b;
+		imul dx, f;
+		sub cx, dx;
+		mov xtop, cx;
+
+		mov cx, a;
+		imul cx, e;
+		mov dx, b;
+		imul dx, d;
+		sub cx, dx;
+		mov xbot, cx;
+
+		mov dx, xtop;
+		cdq
+		idiv xbot;
+		mov X, dx;
+
+		call answer;
+	}
+	cout << xtop << endl;
+	cout << xbot << endl;
+
+	system("pause");
+	return 0;
+}
