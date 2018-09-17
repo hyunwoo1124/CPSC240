@@ -1,3 +1,6 @@
+/*
+
+*/
 #include <iostream>
 #include <string>
 using namespace std;
@@ -7,11 +10,11 @@ short d, e, f = 0;
 
 short ytop = 0;
 short ybot = 0;
+short zero = 0;
 
 short xtop = 0;
 short xbot = 0;
-short Y, X = 0;
-short total = 0;
+short Yanswer, Xanswer = 0;
 
 
 void printVisual() {
@@ -27,25 +30,51 @@ void userInput() {
 	cout << "Enter the values of d,e, and f: ";
 	cin >> d >> e >> f;
 }
-void answer() {
-	cout << " x = " << X << endl;
-	cout << " y = " << Y << endl;
+void printX() {
+	cout << "X=" << Xanswer << endl;
+}
+void printY() {
+	cout << "Y=" << Yanswer << endl;
 }
 
-
-int main() {
+	int main() {
 	
 	_asm {
 		call printVisual;
 		call userInput;
 
-		mov ax, a;
-		imul ax, f;
-		mov bx, c;
-		mov bx, d;
-		sub ax, bx;
-		mov ytop, ax;
+		mov ax, c;			// ax =c
+		imul eax, e;		// ax = c*e
+		mov bx, b;			// bx = b
+		imul bx, f;			// bx = b*f
+		sub ax, bx;			// ax = c*e - b*f
+		mov xtop, ax;		// xtop = a*e - b*f
 
+		mov ax, 0;
+		mov bx, 0;
+
+		mov ax, a;			// ax = a
+		imul ax, e;			// ax = a*e;
+		mov bx, b;			// bx =b
+		imul bx, d;			// bx = b*d
+		sub ax, bx;			// ax = a*e - b*d
+		mov xbot, ax;		// xbot = a*e - b*d
+
+		mov ax, xtop;		// ax = xtop = a*e - b*f
+		cwd;
+		idiv xbot;			//ax = xtop/xbot
+		mov Xanswer, ax;
+
+		
+
+		mov ax, a;			// ax = a
+		imul ax, f;			// ax = a*f
+		mov bx, c;			// bx = c
+		imul bx, d;			// bx = c*d
+		sub ax, bx;			
+		mov ytop, ax;		//ytop = a*f - c*d
+		 
+		
 		mov ax, a;
 		imul ax, e;
 		mov bx, b;
@@ -54,34 +83,14 @@ int main() {
 		mov ybot, ax;
 
 		mov ax, ytop;
-		cdq;
+		cwd;
 		idiv ybot;
-		mov Y, ax;
+		mov Yanswer, ax;
 
-		mov cx, c;
-		imul cx, e;
-		mov dx, b;
-		imul dx, f;
-		sub cx, dx;
-		mov xtop, cx;
-
-		mov cx, a;
-		imul cx, e;
-		mov dx, b;
-		imul dx, d;
-		sub cx, dx;
-		mov xbot, cx;
-
-		mov dx, xtop;
-		cdq
-		idiv xbot;
-		mov X, dx;
-
-		call answer;
-	}
-	cout << xtop << endl;
-	cout << xbot << endl;
-
+		call printX;
+		call printY;
+		}
+	
 	system("pause");
 	return 0;
 }
