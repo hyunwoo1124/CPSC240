@@ -12,57 +12,45 @@ string name = "";
 int age = 0;
 char gender;
 
-void printName() {
+void display() {
 	cout << "Enter your name: ";
 	cin >> name;
-}
-void printAge() {
-	cout << name << " ,how old are you? ";
+	cout << name << " , how old are you? ";
 	cin >> age;
-}
-void printGender() {
-	cout << name << " , what is your gender(m/f)? ";
+	cout << name << " , what is your gener(m/f)? ";
 	cin >> gender;
 }
-void FemaleTeen() {
-	cout << "Hi " << name << " ,you are a female teenager\n";
+void femaleTeen() {
+	cout << "Hi " << name << " , you are a female teenager";
 }
-void NotFemaleTeen() {
-	cout << "Hi " << name << ", you are not a female teenager\n";
-}
+void notFemaleTeen() {
+	cout << "Hi " << name << " , you are not a female teenager";
 
+}
 int main() {
-
 	_asm {
-		call printName;
-		mov eax, name;		//eax = name;
-
-
+		call display;
 	checkAge:
-		call printAge;
-		mov ebx, age;		//ebx = age;
-		cmp ebx, 13;
+		mov eax, age;
+		cmp eax, 13;
 		jl notFTeen;
-	check19:				// check if greater than 19 if so jump to notFTeen
-		cmp ebx, 19;
+	check19:
+		cmp eax, 19;
 		jg notFTeen;
-	checkGender:			// check gender, if not 'F' jump to notFTeen
-		call printGender;
-		mov al, gender;		//al = gender;
-		cmp gender, 'F';
-		jne notFTeen;
-	femaleTeen:				// if not anything else you are female teen
-		call FemaleTeen;
+	checkGender:
+		mov bl, gender;
+		cmp bl, 'f';
+		jne checkF;
+	FTeen:
+		call femaleTeen;
 		jmp cont;
-	checkf:					// if not 'f' jump to notFTeen
-		cmp gender, 'f';
+	checkF:
+		cmp bl, 'F';
 		jne notFTeen;
+		jmp FTeen;
 	notFTeen:
-		call NotFemaleTeen;
+		call notFemaleTeen;
 	cont:
-
-
-	
 	}
 	system("pause");
 	return 0;
