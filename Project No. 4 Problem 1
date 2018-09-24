@@ -1,0 +1,70 @@
+/*
+Description:
+	This project reads the character of y and n and display how many times the character was used.
+	for example:
+			Enter a string of votes: yyn
+				y vote = **
+				n vote = *
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+char vote;
+int countYes = 0;
+int countNo = 0;
+string yesStar = "";
+string noStar = "";
+
+void display() {
+	cout << "Enter a string of votes: ";
+}
+void readYes() {
+
+	if (vote == 'y') {
+		countYes++;
+		yesStar += "* ";
+	}
+	cin.get(vote);
+
+}
+void readNo() {
+
+	if (vote == 'n') {
+		countNo++;
+		noStar += "* ";
+	}
+	cin.get(vote);
+
+}
+void displayAnswer() {
+	cout << "No. of Yes: " << countYes << " " << yesStar << endl;
+	cout << "No. of No: " << countNo << " " << noStar << endl;
+}
+
+int main() {
+	_asm {
+		call display;
+		call readYes;
+		call readNo;
+	read:
+		cmp vote, '\n';			// if a user enter it finishes
+		je cont;
+		cmp vote, 'y';
+		jne No;
+		jmp Yes;
+	Yes:
+		call readYes;
+		jmp read;
+	No:
+		call readNo;
+		jmp read;
+	cont:
+		call displayAnswer;
+	}
+	
+	
+	system("pause");
+	return 0;
+}
+
