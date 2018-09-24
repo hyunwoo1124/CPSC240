@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int x = 0;
+int y = 0;
+char choice;
+
+int answer = 0;
+int userAnswer = 0;
+
+int numOfCorrect = 0;
+int numOfWrong = 0;
+
+void Correct() {
+	numOfCorrect++;
+}
+void Wrong() {
+	numOfWrong++;
+}
+
+void display() {
+	cout << "a.  Practice Addition\n";
+	cout << "b.  Practice Subtraction\n";
+}
+void Addition() {
+	cout << x << " + " << y << " =? ";
+	cin >> userAnswer;
+}
+void Subtraction() {
+	cout << x << " - " << y << " =? ";
+	cin >> userAnswer;
+}
