@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+char c;
+
+void display() {
+	cout << "Enter a sentence: ";
+}
+void readChar() {
+	cin.get(c);
+	toupper(c);
+	
+}
+
+int main() {
+	_asm {
+		call display;
+		call readChar;
+	read:
+		cmp c, '\n';
+		je done;
+		cmp c, 'a';
+		je Uppercase;
+		cmp c, 'e';
+		je Uppercase;
+		cmp c, 'i';
+		je Uppercase;
+		cmp c, 'o';
+		je Uppercase;
+		cmp c, 'u';
+		je Uppercase;
+	Uppercase:
+		call readChar;
+	done:
+
+	}
+	system("pause");
+	return 0;
+}
