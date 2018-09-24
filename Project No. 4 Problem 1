@@ -19,24 +19,20 @@ string noStar = "";
 void display() {
 	cout << "Enter a string of votes: ";
 }
-void readYes() {
+void readYesNo() {
 
 	if (vote == 'y') {
-		countYes++;
 		yesStar += "* ";
+		countYes++;
 	}
-	cin.get(vote);
-
-}
-void readNo() {
-
 	if (vote == 'n') {
-		countNo++;
 		noStar += "* ";
+		countNo++;
 	}
 	cin.get(vote);
 
 }
+
 void displayAnswer() {
 	cout << "No. of Yes: " << countYes << " " << yesStar << endl;
 	cout << "No. of No: " << countNo << " " << noStar << endl;
@@ -45,19 +41,17 @@ void displayAnswer() {
 int main() {
 	_asm {
 		call display;
-		call readYes;
-		call readNo;
 	read:
 		cmp vote, '\n';			// if a user enter it finishes
 		je cont;
 		cmp vote, 'y';
 		jne No;
-		jmp Yes;
 	Yes:
-		call readYes;
+		call readYesNo;
 		jmp read;
 	No:
-		call readNo;
+		cmp vote, 'n';
+		call readYesNo;
 		jmp read;
 	cont:
 		call displayAnswer;
@@ -67,4 +61,5 @@ int main() {
 	system("pause");
 	return 0;
 }
+
 
