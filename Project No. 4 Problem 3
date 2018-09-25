@@ -1,3 +1,181 @@
+//NATHAN'S CODE
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+char choice;	//Choice A or B
+char continueQuestions;	//Continue adding or subtracting? y or n
+char finished;	//Continue to practice? y or n
+int x = 0, y = 0;	//Used for two random integers
+int answer = 0;	//Keeps track of the add or sub answers
+int inputAnswer = 0;	//User answer
+int wrongCount = 0, rightCount = 0;	//Keeps track of right and wrong answers
+
+char AorS;	//Keeps track of if the user is still practicing addition or subtraction
+
+void firstMenu() {	//Displays the first menu
+	cout << "a.\tPractice Addition\nb.\tPractice Subtraction\n";
+}
+
+void askChoice() {	//Ask if user wants to add or subtract
+	cout << "Enter your choice(a/b): ";
+}
+
+void AB() {	//User enters whether they want to add or subtract
+	cin >> choice;
+}
+
+void randNumAdd() {	//Generates two random numbers and adds them together
+	x = rand() % 100;
+	y = rand() % 100;
+	answer = x + y;
+}
+
+void randNumSub() { //Generates two random numbers and subtracts them together
+	x = rand() % 100;
+	y = rand() % 100;
+	answer = x - y;
+}
+
+void displayAddition() {	//Displays addition
+	cout << x << " + " << y << " = ?";
+}
+
+void displaySubtraction() {	//Displays subtraction
+	cout << x << " - " << y << " = ?";
+}
+
+void input() {	//User inputs their answer to the question
+	cin >> inputAnswer;
+}
+
+void correct() {	//Displays correct
+	cout << "CORRECT\n";
+}
+
+void incorrect() {	//Displays wrong
+	cout << "WRONG\n";
+}
+
+void continueFunc() {	//Asks user if they want to continue adding or subtracting, user inputs answer
+	cout << "Continue(y/n)? ";
+	cin >> continueQuestions;
+}
+
+void doneFunc() {	//Asks user if they want to quit practicing, user inputs answer
+	cout << "Are you done(y/n)? ";
+	cin >> finished;
+}
+
+void results() {	//Displays results of the user's answers
+	cout << "No. of CORRECT answers = " << rightCount << endl;
+	cout << "No. of WRONG answers = " << wrongCount << endl;
+	rightCount = 0;
+	wrongCount = 0;
+}
+
+int main() {
+
+	_asm {
+
+		call firstMenu;
+
+	AorB:
+		call askChoice;
+		call AB;
+		mov al, choice;
+		cmp al, 'a';	//If user entered a, check if it is capitalized
+		jne checkChoiceA;
+		Jmp choiceA;	//If it is eqaul to a, then jump to choice a (addition)
+
+	checkChoiceA:
+		cmp choice, 'A';	//Checks if equal to A
+		jne choiceB;		//If not, jump to choice b/B (subtraction)
+
+	choiceA:
+		mov AorS, 'a';	//AorS is used to keep track that the user is practicing addition
+		call randNumAdd
+			call displayAddition;
+		call input;
+		mov eax, answer;
+		cmp eax, inputAnswer;	//If the answer is correct jump to right answer, else jump to wrong
+		jne wrongAnswer;
+		jmp rightAnswer;
+
+	choiceB:				//Same as choiceA, but AorS is used to keep track that the user is practicing subtraction
+		mov AorS, 's';
+		call randNumSub;
+		call displaySubtraction;
+		call input;
+		mov eax, answer;
+		cmp eax, inputAnswer;
+		jne wrongAnswer;
+		je rightAnswer;
+
+	rightAnswer:
+		inc rightCount;	//Increment the amount of right answers
+		call correct;
+		jmp cont;
+
+	wrongAnswer:
+		inc wrongCount;	//Increment the amount of wrong answers
+		call incorrect;
+		jmp cont;
+
+	cont:
+		mov al, AorS;	//Checks of AorS is in subtraction or addition
+		cmp al, 'a';	//If a, jump to contAdd, else jump to contSub
+		je contAdd;
+		jne contSub;
+
+	contAdd:
+		call continueFunc;
+		cmp continueQuestions, 'y';	//If choice is y, jump to choiceA, else check if Y
+		jne checkYAdd;
+		jmp choiceA;
+
+	contSub:
+		call continueFunc;
+		cmp continueQuestions, 'y'; //If choice is y, jump to choiceB, else check if Y
+		jne checkYSub;
+		jmp choiceB;
+
+	checkYAdd:
+		cmp continueQuestions, 'Y';	//If choice is Y, jump to choiceA, else jump endEqaution
+		jne endEquation;
+		jmp choiceA;
+
+	checkYSub:
+		cmp continueQuestions, 'Y'; //If choice is Y, jump to choiceB, else jump endEqaution
+		jne endEquation;
+		jmp choiceB;
+
+	endEquation:
+		call results;
+		call doneFunc;
+		cmp finished, 'y'; //If choice is y, end function, else jump checkYFinished
+		jne checkYFinished;
+
+	checkYFinished:
+		cmp finished, 'Y';	//If choice is Y, end function, else jump notFinished
+		je over;
+		jmp notFinished;
+	notFinished:
+		jmp AorB;
+
+	over:
+	}
+
+	system("pause");
+	return 0;
+}
+
+
+
+/*KEVIN'S CODE
+
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -177,5 +355,4 @@ int main() {
 	system("pause");
 	return 0;
 }
-
-	
+*/
