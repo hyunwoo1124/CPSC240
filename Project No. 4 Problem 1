@@ -7,8 +7,6 @@ Description:
 				n vote = *
 */
 
-//KEVIN'S CODE
-
 #include <iostream>
 #include <string>
 using namespace std;
@@ -37,8 +35,8 @@ void readYesNo() {
 }
 
 void displayAnswer() {
-	cout << "No. of Yes: " << countYes << " " << yesStar << endl;
-	cout << "No. of No: " << countNo << " " << noStar << endl;
+	cout << "No. of YES = " << countYes << " = " << yesStar << endl;
+	cout << "No. of NO = " << countNo << " = " << noStar << endl;
 }
 
 int main() {
@@ -64,9 +62,3 @@ int main() {
 	system("pause");
 	return 0;
 }
-
-
-
-
-
-//NATHAN'S CODE
