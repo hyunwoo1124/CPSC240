@@ -1,22 +1,49 @@
 #include <iostream>
 #include <string>
+#include <ctime>
 using namespace std;
 
 int x = 0;
 int y = 0;
 char choice;
+char yesNo;
 
 int answer = 0;
 int userAnswer = 0;
 
-int numOfCorrect = 0;
-int numOfWrong = 0;
+int numOfCorrectA = 0;
+int numOfWrongA= 0;
+int numOfCorrectS = 0;
+int numOfWrongS = 0;
 
-void Correct() {
-	numOfCorrect++;
+void CorrectA() {
+	cout << "CORRECT\n";
+	numOfCorrectA++;
 }
-void Wrong() {
-	numOfWrong++;
+void WrongA() {
+	cout << "WRONG\n";
+	numOfWrongA++;
+}
+void CorrectS() {
+	cout << "CORRECT\n";
+	numOfCorrectS++;
+}
+void WrongS() {
+	cout << "WRONG\n";
+	numOfWrongS++;
+}
+void scoreAddition() {
+	cout << "No. of CORRECT answers = " << numOfCorrectA << endl;
+	cout << "No. of WRONG answers = " << numOfWrongA << endl;
+}
+void scoreSubtraction() {
+	cout << "No. of CORRECT answers = " << numOfCorrectS << endl;
+	cout << "No. of WRONG answers = " << numOfWrongS << endl;
+}
+void generateRand() {
+	
+	x = rand() % 100;
+	y = rand() % 100;
 }
 
 void display() {
@@ -31,3 +58,124 @@ void Subtraction() {
 	cout << x << " - " << y << " =? ";
 	cin >> userAnswer;
 }
+void AB() {
+	cout << "Enter your choice(a/b): ";
+	cin >> choice;
+}
+void areYouDone() {
+	cout << "Are you done(y/n)? ";
+	cin >> yesNo;
+}
+void cont() {
+	cout << "Continue(y/n)? ";
+	cin >> yesNo;
+}
+int main() {
+	_asm {
+		
+	AorB:
+		call display;			// display a for add b for sub
+		call AB;				// choice a or b
+		mov al, choice;
+		cmp al, 'a';
+		jne doSubtraction;
+		jmp doAddition;
+	doAddition:
+		call generateRand;
+		call Addition;
+
+		mov eax, x;
+		mov ebx, y;
+		add eax, ebx;
+		mov answer, eax;
+		mov ecx, userAnswer;
+		cmp ecx, answer;
+		jne notCorrectAdd;
+		jmp correctAdd;
+	correctAdd:
+		call CorrectA;
+		call cont;
+		mov al, yesNo;
+		cmp al, 'y';
+		jne checkYA;
+		jmp doAddition;
+	checkYA:
+		cmp al, 'Y';
+		jne scoreAdd;
+		jmp doAddition;
+	notCorrectAdd:
+		call WrongA;
+		call cont;
+		mov al, yesNo;
+		cmp al, 'y';
+		jne checkYAs;
+	checkYAs:
+		cmp al, 'Y';
+		jne scoreAdd;
+		jmp doAddition;
+	scoreAdd:
+		call scoreAddition;
+		call areYouDone;
+		mov al, yesNo;
+		cmp al, 'n';
+		jne checkN;
+		jmp AorB;
+	checkNA:
+		cmp al, 'N';
+		je AorB;
+		jmp done;
+		
+	
+	doSubtraction:
+		call generateRand;
+		call Subtraction;
+
+		mov eax, x;
+		mov ebx, y;
+		sub eax, ebx;
+		mov answer, eax;
+		mov ecx, userAnswer;
+		cmp ecx, answer;
+		jne notCorrectSub;
+		jmp correctSub;
+	correctSub:
+		call CorrectS;
+		call cont;
+		mov al, yesNo;
+		cmp al, 'y';
+		jne checkYS;
+		jmp doSubtraction;
+	checkYS:
+		cmp al, 'Y';
+		jne scoreAdd;
+		jmp doSubtraction;
+	notCorrectSub:
+		call WrongS;
+		call cont;
+		mov al, yesNo;
+		cmp al, 'y';
+		jne checkY;
+		jmp doSubtraction;
+	checkY:
+		cmp al, 'Y';
+		jne scoreSub;
+		jmp doSubtraction;
+	scoreSub:
+		call scoreSubtraction;
+		call areYouDone;
+		mov al, yesNo;
+		cmp al, 'n';
+		jne checkN;
+	checkN:
+		je AorB;
+	done:
+
+	}
+	cout << "Have a nice day";
+
+
+	system("pause");
+	return 0;
+}
+
+	
