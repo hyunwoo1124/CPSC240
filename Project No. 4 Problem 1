@@ -6,7 +6,6 @@ Description:
 				y vote = **
 				n vote = *
 */
-
 #include <iostream>
 #include <string>
 using namespace std;
@@ -14,51 +13,68 @@ using namespace std;
 char vote;
 int countYes = 0;
 int countNo = 0;
-string yesStar = "";
-string noStar = "";
+int i = 0;
 
 void display() {
 	cout << "Enter a string of votes: ";
 }
-void readYesNo() {
-
-	if (vote == 'y') {
-		yesStar += "* ";
-		countYes++;
-	}
-	if (vote == 'n') {
-		noStar += "* ";
-		countNo++;
-	}
+void input() {
 	cin.get(vote);
+}
+void star() {
+	cout << "* ";
+}
+void endline() {
+	cout << endl;
+}
+void displayAnswerY() {
+	cout << "No. of Yes: " << countYes << " ";
+}
+void displayAnswerN() {
+	cout << "No. of No: " << countNo << " ";
 
 }
-
-void displayAnswer() {
-	cout << "No. of YES = " << countYes << " = " << yesStar << endl;
-	cout << "No. of NO = " << countNo << " = " << noStar << endl;
-}
-
 int main() {
 	_asm {
 		call display;
 	read:
+		call input;
 		cmp vote, '\n';			// if a user enter it finishes
 		je cont;
 		cmp vote, 'y';
 		jne No;
 	Yes:
-		call readYesNo;
+		inc countYes;
 		jmp read;
 	No:
-		cmp vote, 'n';
-		call readYesNo;
+		inc countNo;
 		jmp read;
 	cont:
-		call displayAnswer;
+		call displayAnswerY;
+		mov i, 1;
+	forloopY:
+		mov eax, countYes;
+		cmp i, eax;
+		jg doneY;
+		call star;
+		inc i;
+		jmp forloopY;
+	doneY:
+		call endline;
+		mov i, 1;
+		call displayAnswerN;
+	forloopN:
+		mov eax, countNo;
+		cmp i, eax;
+		jg doneN;
+		call star;
+		inc i;
+		jmp forloopN;
+	doneN:
+		call endline;
 	}
-	
 	
 	system("pause");
 	return 0;
 }
+
