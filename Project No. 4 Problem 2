@@ -1,3 +1,63 @@
+// Final Code
+/*
+CPSC 240
+Assignment 4 Problem 2
+Author: Hyun Woo Kim, Nathan Marcos
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+char c;
+string sentence = "";
+
+void display() {
+	cout << "Enter a sentence: ";
+}
+void displaySentence() {
+	cout << "Output: " << sentence;
+}
+void input() {
+	cin.get(c);
+}
+void appendC() {
+	sentence += c;
+}
+
+int main() {
+	_asm {
+		call display;
+	read:
+		call input;
+
+		cmp c, '.';
+		je done;
+		cmp c, 'a';
+		je toUppercase;
+		cmp c, 'e';
+		je toUppercase;
+		cmp c, 'i';
+		je toUppercase;
+		cmp c, 'o';
+		je toUppercase;
+		cmp c, 'u';
+		je toUppercase;
+
+		call appendC;
+		jmp read;
+	toUppercase:
+		sub c, 32;
+		call appendC;
+		jmp read;
+
+	done:
+		call displaySentence;
+	}
+	cout << endl;
+	system("pause");
+	return 0;
+}
+
 //NATHAN'S CODE
 #include <iostream>
 #include <string>
