@@ -1,4 +1,4 @@
-// Final Code
+// final code
 /*
 CPSC 240
 Assignment 4 Problem 2
@@ -9,20 +9,20 @@ Author: Hyun Woo Kim, Nathan Marcos
 using namespace std;
 
 char c;
-string sentence = "";
 
 void display() {
 	cout << "Enter a sentence: ";
 }
 void displaySentence() {
-	cout << "Output: " << sentence;
+	cout << "Output: ";
+}
+void displayChar() {
+	cout << c;
 }
 void input() {
 	cin.get(c);
 }
-void appendC() {
-	sentence += c;
-}
+
 
 int main() {
 	_asm {
@@ -43,15 +43,17 @@ int main() {
 		cmp c, 'u';
 		je toUppercase;
 
-		call appendC;
+		call displayChar;
 		jmp read;
+
+
 	toUppercase:
 		sub c, 32;
-		call appendC;
+		call displayChar;
 		jmp read;
 
 	done:
-		call displaySentence;
+		
 	}
 	cout << endl;
 	system("pause");
