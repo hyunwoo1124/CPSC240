@@ -53,7 +53,7 @@ int main() {
 		jmp read;
 
 	done:
-		
+		call displayChar;
 	}
 	cout << endl;
 	system("pause");
