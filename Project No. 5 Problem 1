@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+#include <bitset>
+
+using namespace std;
+
+short numOfPrinters;
+short numOfDisks;
+short ram;
+
+void print() {
+	cout << "Printers: " << numOfPrinters << endl;
+	cout << "Floppy Disks: " << numOfDisks << endl;
+	cout << "Size of ram: " << ram << "GB" << endl;
+}
+
+int main() {
+	_asm {
+		mov ax, 1100111010011100b;
+		mov bx, ax;
+		and bx, 1100000000000000b;
+		shr bx, 14;
+		mov numOfPrinters, bx;
+
+		mov bx, ax;
+		and bx, 0000000011000000b;
+		shr bx, 6;
+		add bx, 1;
+		mov numOfDisks, bx;
+
+		mov bx, ax;
+		and bx, 0000000000001100b;
+		shr bx, 2;
+		add bx, 1;
+		imul bx, 16;
+		mov ram, bx;
+
+		call print;
+	}
+
+	system("pause");
+	return 0;
+}
