@@ -1,0 +1,92 @@
+#include <iostream>
+#include <string>
+#include <bitset>
+
+using namespace std;
+
+int pin;
+
+void printPinEven() {
+	cout << uppercase << hex << pin << " is a valid ID for the family\n";
+}
+
+void printPinOdd() {
+	cout << uppercase << hex << pin << " is not a valid ID for the family\n";
+}
+
+int main() {
+	_asm {
+		mov eax, 0;
+		mov ebx, 0xBEEF;
+		mov pin, ebx;
+
+	beefLoop:
+		mov ecx, ebx;
+		and ecx, 0x000F; 0000 0000 0000 1111
+			add eax, ecx;
+		shr ebx, 4;
+		cmp ebx, 0;
+		jne beefLoop;
+		and eax, 1;
+		cmp eax, 0;
+		jne beefOdd;
+
+	beefEven:
+		call printPinEven;
+		jmp beefEnd;
+
+	beefOdd:
+		call printPinOdd;
+
+	beefEnd:
+		mov eax, 0;
+		mov ebx, 0xFADE;
+		mov pin, ebx;
+
+	fadeLoop:
+		mov ecx, ebx;
+		and ecx, 0x000F;
+		add eax, ecx;
+		shr ebx, 4;
+		cmp ebx, 0;
+		jne fadeLoop;
+		and eax, 1;
+		cmp eax, 0;
+		jne fadeOdd;
+
+	fadeEven:
+		call printPinEven;
+		jmp fadeEnd;
+
+	fadeOdd:
+		call printPinOdd;
+
+	fadeEnd:
+		mov eax, 0;
+		mov ebx, 0xCABE;
+		mov pin, ebx;
+
+	cabeLoop:
+		mov ecx, ebx;
+		and ecx, 0x000F;
+		add eax, ecx;
+		shr ebx, 4;
+		cmp ebx, 0;
+		jne cabeLoop;
+		and eax, 1;
+		cmp eax, 0;
+		jne cabeOdd;
+
+	cabeEven:
+		call printPinEven;
+		jmp cabeEnd;
+
+	cabeOdd:
+		call printPinOdd;
+
+	cabeEnd:
+	}
+
+	system("pause");
+	return 0;
+}
