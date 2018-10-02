@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <bitset>
+
+using namespace std;
+
+short i = 1, nbr = 37132, bitChecker = 1, temp = 0;
+
+void outBX() {
+	cout << "AX = " << bitset<16>(nbr);
+}
+
+void elevatorStops() {
+	cout << "\nElevator will stop at floors: ";
+}
+
+void printFloors() {
+	cout << i << " ";
+}
+
+void newLine() {
+	cout << endl;
+}
+
+int main() {
+
+	_asm {
+		mov	bx, 1001000100001100b;
+		call outBX;
+		call elevatorStops;
+
+	forLoop:
+		cmp	i, 16;
+		jg done;
+		and bitChecker, bx;
+		cmp	bitChecker, 0;
+		je goUp;
+		call printFloors;
+		inc i;
+		ror	bx, 1;
+		jmp	forLoop;
+
+	goUp:
+		inc	i;
+		mov	bitChecker, 1;
+		ror	bx, 1;
+		jmp	forLoop;
+
+	done:
+		call newLine;
+	}
+
+	system("pause");
+	return 0;
+}
