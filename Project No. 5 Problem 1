@@ -1,43 +1,43 @@
 #include <iostream>
 #include <string>
-#include <bitset>
-
 using namespace std;
 
-short numOfPrinters;
-short numOfDisks;
-short ram;
+short numOfPrinter = 0;
+short numOfDisks = 0;
+short ram = 0;
 
 void print() {
-	cout << "Printers: " << numOfPrinters << endl;
-	cout << "Floppy Disks: " << numOfDisks << endl;
-	cout << "Size of ram: " << ram << "GB" << endl;
+	cout << "Suppose AX register is 1100 1110 1001 1100\n\n";
+	cout << "The numer of printers connected to the computer " << numOfPrinter << endl;
+	cout << "The number of floppy drives " << numOfDisks << endl;
+	cout << "The size of the RAM " << ram << "GB" << endl;
 }
-
 int main() {
 	_asm {
+		// count printers
 		mov ax, 1100111010011100b;
 		mov bx, ax;
 		and bx, 1100000000000000b;
 		shr bx, 14;
-		mov numOfPrinters, bx;
+		mov numOfPrinter, bx;
 
+		// count floppy Disks
 		mov bx, ax;
-		and bx, 0000000011000000b;
+		and bx, 0000000010000000b;
 		shr bx, 6;
-		add bx, 1;
+		add bx, 1;					// add 1 because flopy drives starts at plus one
 		mov numOfDisks, bx;
 
+		// count Ram
 		mov bx, ax;
 		and bx, 0000000000001100b;
 		shr bx, 2;
-		add bx, 1;
+		add bx, 1;					// ram starts at 1 and multiply by 16 to get output 
 		imul bx, 16;
 		mov ram, bx;
 
 		call print;
 	}
-
 	system("pause");
 	return 0;
 }
