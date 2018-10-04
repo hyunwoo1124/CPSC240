@@ -1,0 +1,61 @@
+/*
+Project 5 Problem 3
+Author: Nathan Marcos, Hyun Woo Kim
+Professor: Ahmadnia
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+short counter;
+short c;
+short i;
+
+void display() {
+	cout << "AX = 0110 1010 0010 1111\n";
+}
+
+void answers() {
+	cout <<"\n "<< counter << " sprinklers are ON\n";
+}
+void defectiveSprinkler() {
+	cout << i << " ";
+}
+void displayDefective() {
+	cout << "Defective are: ";
+}
+
+
+int main() {
+	_asm {
+		call display;
+		call displayDefective;
+		mov bx, 0110101000101111b;
+		mov c, 1;
+		mov i, 1;
+	forloop:
+		cmp i, 16;
+		jg done;
+		and c, bx;
+		cmp c, 1;
+		je add_1;
+		call defectiveSprinkler;
+		shr bx, 1;
+		mov c, 1;
+		inc i;
+		jmp forloop;
+	add_1:
+		inc counter;
+		inc i;
+		shr bx, 1;
+		mov c, 1;
+		jmp forloop;
+	done:
+		call answers;
+
+
+
+	}
+	system("pause");
+	return 0;
+}
