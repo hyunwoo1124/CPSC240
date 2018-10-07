@@ -1,0 +1,88 @@
+/*
+Project 6 Problem 1
+Author: Hyun Woo Kim, Nathan Marcos
+Professor: Ahmadnia
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+int shirts;
+int largeShirts;
+int blackShirts;
+int i;
+int a[4][4] = { 10,20,30,40,20,10,40,30,5,15,20,25,30,25,20,15 };
+
+
+void box() {
+	cout << "\t Small \t Medium   Large  X-Large\n";
+	cout << "  Red \t 10 \t 20 \t 30 \t 40\n";
+	cout << "Green \t 20 \t 10 \t 40 \t 30\n";
+	cout << " Blue \t  5 \t 15 \t 20 \t 25\n";
+	cout << "Black \t 30 \t 25 \t 20 \t 15\n";
+	cout << endl;
+}
+void displayAllShirts() {
+	cout << "Number of all shirts: " << shirts;
+	cout << endl;
+}
+void displaylargeShirts() {
+	cout << "Number of Large shirts: " << largeShirts;
+	cout << endl;
+}
+void displayblackShirts() {
+	cout << "Number of Black shirts: " << blackShirts;
+	cout << endl;
+}
+
+int main() {
+	_asm {
+		call box;
+		mov ecx, 0;			// number of all shirts = 0;
+		mov i, 0;
+		lea esi, a;
+		// num of all shirts
+	loopOfAllShirts:
+		cmp i, 16;
+		je doneAllShirts;
+		add ecx, [esi];
+		add esi, 4;
+		inc i;
+		jmp loopOfAllShirts;
+	doneAllShirts:
+		mov shirts, ecx;
+		call displayAllShirts;
+		// num of large shirts
+		mov ecx, 0;
+		mov i, 0;
+		lea esi, a;
+		add esi, 8;
+	loopOfLargeShirts:
+		cmp i, 4;
+		jg doneLargeShirts;
+		add ecx, [esi];
+		add esi, 16;
+		inc i;
+		jmp loopOfLargeShirts;
+	doneLargeShirts:
+		mov largeShirts, ecx;
+		call displaylargeShirts;
+		// num of black shirts
+		mov ecx, 0;
+		mov i, 0;
+		lea esi, a;
+		add esi, 48;
+	loopOfBlackShirts:
+		cmp i, 4;
+		je doneBlackShirts;
+		add ecx, [esi];
+		add esi, 4;
+		inc i;
+		jmp loopOfBlackShirts;
+	doneBlackShirts:
+		mov blackShirts, ecx;
+		call displayblackShirts;
+	}
+	system("pause");
+	return 0;
+}
